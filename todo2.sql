@@ -1,3 +1,14 @@
+CREATE TABLE todos (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    details TEXT,
+    priority INTEGER NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL,
+    completed_at TIMESTAMP  NULL );
+
+/*Write INSERT statements to insert 20 todos into the todos table, with a combination of priorities, created times, and completed times, with not all having a completed time.*/
+    
+
 
 INSERT INTO todos (title, details, priority, created_at) VALUES ('Read Book 1','Read and grasp a full understanding of On The Geneology of Morality', 10, '2017-09-07 11:30:34');
 
@@ -38,3 +49,33 @@ INSERT INTO todos (title, details, priority, created_at, completed_at) VALUES ('
 INSERT INTO todos (title, details, priority, created_at) VALUES ('Date Night', 'Take your beautiful wife out for a date you self absorbed sonuva', 1, '2017-09-08 07:20:04');
 
 INSERT INTO todos (title, details, priority, created_at) VALUES ('Study', 'Study for at least 13 hours over the weekend', 1, '2017-09-06 07:45:44');
+
+-- /Write a SELECT statement to find all incomplete todos with priority 3.
+
+SELECT *
+FROM todos
+WHERE completed_at IS NULL
+AND priority = 3; 
+
+-- /Write a SELECT statement to find the number of incomplete todos by priority.
+
+SELECT COUNT(title), priority
+FROM todos
+WHERE completed_at IS Null
+GROUP BY priority; 
+
+-- /Write a SELECT statement to find the number of todos by priority created in the last 30 days.
+
+SELECT COUNT(title), priority 
+FROM todos
+WHERE created_at < '2017-09-08 08:34:02'
+AND created_at  > '2017-08-08 08:34:02'
+GROUP BY priority;
+
+-- /Write a SELECT statement to find the next todo you should work on. This is the todo with the highest priority that was created first.
+
+SELECT title, MIN(created_at)
+FROM todos 
+WHERE completed_at is null
+AND priority = 1
+GROUP BY title;
